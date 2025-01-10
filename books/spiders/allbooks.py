@@ -28,7 +28,7 @@ class AllbooksSpider(scrapy.Spider):
     def parse_book_details(self, response: Response):
         yield {
             "title": response.css('div.product_main h1::text').get(),
-            "price": response.css('p.price_color::text').get().replace("£", ""),
+            "price": response.css('p.price_color::text').get(),
             "amount_in_stock": response.css('tr:contains("Availability") td::text').re_first(r'\d+'),
             "rating": self.rating_map.get(response.css(".star-rating::attr(class)").get().split()[-1], 0),
             "description": response.css('meta[name="description"]::attr(content)').get(),
